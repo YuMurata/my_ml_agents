@@ -13,6 +13,8 @@
 python/models
 python/summaries
 
+/python/env
+
 # Environemnt logfile
 *unity-environment.log
 
