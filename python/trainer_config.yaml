@@ -18,6 +18,91 @@ default:
     summary_freq: 1000
     use_recurrent: false
 
+Stand_Foot_Brain:
+    trainer: ppo
+    batch_size: 2048
+    beta: 5.0e-3
+    buffer_size: 20480
+    epsilon: 0.2
+    gamma: 0.99
+    hidden_units: 128
+    lambd: 0.95
+    learning_rate: 3e-4
+    max_steps: 1e6
+    normalize: True
+    num_epoch: 3
+    num_layers: 2
+    time_horizon: 500
+    summary_freq: 3000
+
+Stand_Solo_Brain:
+    trainer: ppo
+    batch_size: 2048
+    beta: 5.0e-3
+    buffer_size: 20480
+    epsilon: 0.2
+    gamma: 0.99
+    hidden_units: 128
+    lambd: 0.95
+    learning_rate: 3e-4
+    max_steps: 1e6
+    normalize: True
+    num_epoch: 3
+    num_layers: 2
+    time_horizon: 500
+    summary_freq: 3000
+
+Stand_Dual_Brain:
+    trainer: ppo
+    batch_size: 2048
+    beta: 5.0e-3
+    buffer_size: 20480
+    epsilon: 0.2
+    gamma: 0.99
+    hidden_units: 128
+    lambd: 0.95
+    learning_rate: 3e-4
+    max_steps: 1e6
+    normalize: True
+    num_epoch: 3
+    num_layers: 2
+    time_horizon: 500
+    summary_freq: 3000
+
+Avoid_Solo_Brain:
+    trainer: ppo
+    batch_size: 2048
+    beta: 5.0e-3
+    buffer_size: 20480
+    epsilon: 0.2
+    gamma: 0.99
+    hidden_units: 128
+    lambd: 0.95
+    learning_rate: 3e-4
+    max_steps: 1e5
+    normalize: True
+    num_epoch: 3
+    num_layers: 2
+    time_horizon: 500
+    summary_freq: 3000
+
+AvoidedShootWithSingleCapsuleBrain:
+    trainer: ppo
+    batch_size: 2048
+    beta: 5.0e-3
+    buffer_size: 20480
+    epsilon: 0.2
+    gamma: 0.99
+    hidden_units: 128
+    lambd: 0.95
+    learning_rate: 3e-4
+    max_steps: 1e5
+    normalize: True
+    num_epoch: 3
+    num_layers: 2
+    time_horizon: 500
+    summary_freq: 3000
+
 BananaBrain:
     normalize: false
     batch_size: 1024
@@ -80,12 +165,6 @@ GoalieBrain:
 
 Ball3DBrain:
     normalize: true
-    batch_size: 1200
-    buffer_size: 12000
-    summary_freq: 1000
-    time_horizon: 1000
-    gamma: 0.995
-    beta: 0.001
 
 BouncerBrain:
     normalize: true

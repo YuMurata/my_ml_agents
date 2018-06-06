@@ -1,0 +1,11 @@
+{
+    "measure" : "reward",
+    "thresholds" : [2000,2000,2000,2000,2000,2000,2000,2000,2000],
+    "min_lesson_length" : 2,
+    "signal_smoothing" : true, 
+    "parameters" : 
+    {
+        "ShooterRange" : [0,  10, 20, 30, 40, 50, 60, 70, 80, 90],
+        "AllowanceHit" : [50, 40, 30, 20, 10, 5,  4,  3,  2,  1 ]
+    }
+}
