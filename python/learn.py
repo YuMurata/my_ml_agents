@@ -20,13 +20,14 @@ if __name__ == '__main__':
       --keep-checkpoints=<n>     How many model checkpoints to keep [default: 5].
       --lesson=<n>               Start learning from this lesson [default: 0].
       --load                     Whether to load the model or randomly initialize [default: False].
-      --run-id=<path>            The sub-directory name for model and summary statistics [default: ppo]. 
+      --run-id=<path>            The sub-directory name for model and summary statistics [default: ppo].
       --save-freq=<n>            Frequency at which to save model [default: 50000].
       --seed=<n>                 Random seed used for training [default: -1].
       --slow                     Whether to run the game at training speed [default: False].
       --train                    Whether to train model, or only run inference [default: False].
       --worker-id=<n>            Number to add to communication port (5005). Used for multi-environment [default: 0].
       --docker-target-name=<dt>       Docker Volume to store curriculum, executable and model files [default: Empty].
+      --eternal-learning         eternal learning
     '''
 
     options = docopt(_USAGE)
@@ -51,6 +52,7 @@ if __name__ == '__main__':
         curriculum_file = None
     lesson = int(options['--lesson'])
     fast_simulation = not bool(options['--slow'])
+    eternalLearning = bool(options['--eternal-learning'])
 
     # Constants
     # Assumption that this yaml is present in same dir as this file
@@ -58,5 +60,5 @@ if __name__ == '__main__':
     TRAINER_CONFIG_PATH = os.path.abspath(os.path.join(base_path, "trainer_config.yaml"))
 
     tc = TrainerController(env_path, run_id, save_freq, curriculum_file, fast_simulation, load_model, train_model,
-                           worker_id, keep_checkpoints, lesson, seed, docker_target_name, TRAINER_CONFIG_PATH)
+                           worker_id, keep_checkpoints, lesson, seed, docker_target_name, forever,TRAINER_CONFIG_PATH)
     tc.start_learning()

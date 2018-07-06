@@ -17,7 +17,7 @@ from unityagents import UnityEnvironment, UnityEnvironmentException
 
 class TrainerController(object):
     def __init__(self, env_path, run_id, save_freq, curriculum_file, fast_simulation, load, train,
-                 worker_id, keep_checkpoints, lesson, seed, docker_target_name, trainer_config_path):
+                 worker_id, keep_checkpoints, lesson, seed, docker_target_name, eternalLearning,trainer_config_path):
         """
 
         :param env_path: Location to the environment executable to be loaded.
@@ -69,6 +69,7 @@ class TrainerController(object):
         self.train_model = train
         self.worker_id = worker_id
         self.keep_checkpoints = keep_checkpoints
+        self.eternalLearning=eternalLearning
         self.trainers = {}
         if seed == -1:
             seed = np.random.randint(0, 999999)
@@ -235,7 +236,11 @@ class TrainerController(object):
                 for brain_name, trainer in self.trainers.items():
                     trainer.write_tensorboard_text('Hyperparameters', trainer.parameters)
             try:
-                while any([t.get_step <= t.get_max_steps for k, t in self.trainers.items()]) or not self.train_model:
+                isLoop=any([t.get_step <= t.get_max_steps for k, t in self.trainers.items()]) or not self.train_model
+                if self.eternalLearning :
+                    isLoop=True
+
+                while isLoop:
                     if self.env.global_done:
                         self.env.curriculum.increment_lesson(self._get_progress())
                         curr_info = self.env.reset(train_mode=self.fast_simulation)
