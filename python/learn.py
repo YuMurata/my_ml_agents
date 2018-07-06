@@ -60,5 +60,5 @@ if __name__ == '__main__':
     TRAINER_CONFIG_PATH = os.path.abspath(os.path.join(base_path, "trainer_config.yaml"))
 
     tc = TrainerController(env_path, run_id, save_freq, curriculum_file, fast_simulation, load_model, train_model,
-                           worker_id, keep_checkpoints, lesson, seed, docker_target_name, forever,TRAINER_CONFIG_PATH)
+                           worker_id, keep_checkpoints, lesson, seed, docker_target_name, eternalLearning,TRAINER_CONFIG_PATH)
     tc.start_learning()
