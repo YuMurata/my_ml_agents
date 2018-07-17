@@ -236,11 +236,14 @@ class TrainerController(object):
                 for brain_name, trainer in self.trainers.items():
                     trainer.write_tensorboard_text('Hyperparameters', trainer.parameters)
             try:
-                isLoop=any([t.get_step <= t.get_max_steps for k, t in self.trainers.items()]) or not self.train_model
-                if self.eternalLearning :
-                    isLoop=True
+                def isLoop():
+                    if self.eternalLearning :
+                        return True
+                    else:
+                        return any([t.get_step <= t.get_max_steps for k, t in self.trainers.items()]) or not self.train_model
 
-                while isLoop:
+
+                while isLoop():
                     if self.env.global_done:
                         self.env.curriculum.increment_lesson(self._get_progress())
                         curr_info = self.env.reset(train_mode=self.fast_simulation)
@@ -259,15 +262,15 @@ class TrainerController(object):
                     for brain_name, trainer in self.trainers.items():
                         trainer.add_experiences(curr_info, new_info, take_action_outputs[brain_name])
                         trainer.process_experiences(curr_info, new_info)
-                        if trainer.is_ready_update() and self.train_model and trainer.get_step <= trainer.get_max_steps:
+                        if trainer.is_ready_update() and self.train_model #and trainer.get_step <= trainer.get_max_steps:
                             # Perform gradient descent with experience buffer
                             trainer.update_model()
                         # Write training statistics to Tensorboard.
                         trainer.write_summary(self.env.curriculum.lesson_number)
-                        if self.train_model and trainer.get_step <= trainer.get_max_steps:
+                        if self.train_model #and trainer.get_step <= trainer.get_max_steps:
                             trainer.increment_step()
                             trainer.update_last_reward()
-                    if self.train_model and trainer.get_step <= trainer.get_max_steps:
+                    if self.train_model #and trainer.get_step <= trainer.get_max_steps:
                         global_step += 1
                     if global_step % self.save_freq == 0 and global_step != 0 and self.train_model:
                         # Save Tensorflow model
