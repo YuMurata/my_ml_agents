@@ -137,11 +137,11 @@ class Trainer(object):
 
         def IsWrite():
             if self.eternalLearning:
-                return self.get_step % self.trainer_parameters['summary_freq'] == 0 and self.get_step != 0 and
-                self.is_training
+                return (self.get_step % self.trainer_parameters['summary_freq'] == 0 and self.get_step != 0 and
+                self.is_training)
             else:
-                return self.get_step % self.trainer_parameters['summary_freq'] == 0 and self.get_step != 0 and
-                self.is_training and self.get_step <= self.get_max_steps
+                return (self.get_step % self.trainer_parameters['summary_freq'] == 0 and self.get_step != 0 and
+                self.is_training and self.get_step <= self.get_max_steps)
 
         if IsWrite():
             if len(self.stats['cumulative_reward']) > 0:

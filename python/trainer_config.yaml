@@ -99,7 +99,7 @@ Avoid_Solo_Brain:
     hidden_units: 128
     lambd: 0.95
     learning_rate: 3e-4
-    max_steps: 1e5
+    max_steps: 1e1
     normalize: True
     num_epoch: 3
     num_layers: 2
