@@ -19,7 +19,7 @@ class UnityTrainerException(UnityException):
 class Trainer(object):
     """This class is the abstract class for the unitytrainers"""
 
-    def __init__(self, sess, env, brain_name, trainer_parameters, training):
+    def __init__(self, sess, env, brain_name, trainer_parameters, training,eternalLearning):
         """
         Responsible for collecting experiences and training a neural network model.
         :param sess: Tensorflow session.
@@ -34,7 +34,7 @@ class Trainer(object):
         self.sess = sess
         self.stats = {}
         self.summary_writer = None
-
+        self.eternalLearning=eternalLearning
     def __str__(self):
         return '''Empty Trainer'''
 
@@ -134,8 +134,16 @@ class Trainer(object):
         Saves training statistics to Tensorboard.
         :param lesson_number: The lesson the trainer is at.
         """
-        if (self.get_step % self.trainer_parameters['summary_freq'] == 0 and self.get_step != 0 and
-                self.is_training and self.get_step <= self.get_max_steps):
+
+        def IsWrite():
+            if self.eternalLearning:
+                return self.get_step % self.trainer_parameters['summary_freq'] == 0 and self.get_step != 0 and
+                self.is_training
+            else:
+                return self.get_step % self.trainer_parameters['summary_freq'] == 0 and self.get_step != 0 and
+                self.is_training and self.get_step <= self.get_max_steps
+
+        if IsWrite():
             if len(self.stats['cumulative_reward']) > 0:
                 mean_reward = np.mean(self.stats['cumulative_reward'])
                 logger.info(" {}: Step: {}. Mean Reward: {:0.3f}. Std of Reward: {:0.3f}."
